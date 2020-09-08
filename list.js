@@ -241,6 +241,12 @@ function getInfoFromS3Data(xml) {
     }
     // clang-format on
   });
+
+  var collator = new Intl.Collator(undefined, {numeric: true, sensitivity: 'base'});
+  directories.sort(function(d1, d2) {
+    return collator.compare(d2.Key, d1.Key);
+  });
+
   if ($(xml.find('IsTruncated')[0]).text() == 'true') {
     var nextMarker = $(xml.find('NextMarker')[0]).text();
   } else {
